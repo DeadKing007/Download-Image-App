@@ -5,16 +5,12 @@ import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -43,7 +39,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new DownloadImageTask(this,DownloadingImage).execute(imageUrl);
                 // DownloadingImage(imageUrl);
             }else {
+                Toast toast = Toast.makeText(this,"Enter Valid Url", Toast.LENGTH_LONG);
+                toast.show();
                 //error Message
+
             }
         }
 
