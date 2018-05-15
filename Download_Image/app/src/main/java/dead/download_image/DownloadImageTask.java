@@ -1,5 +1,7 @@
 package dead.download_image;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -16,13 +18,19 @@ import static android.content.ContentValues.TAG;
 
 public class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
     ImageView imageView;
-
-    DownloadImageTask(ImageView imageView){
+    ProgressDialog progressDialog;
+    DownloadImageTask(Context context, ImageView imageView){
         this.imageView=imageView;
+        progressDialog=new ProgressDialog(context);
+        progressDialog.setTitle("Downloading");
+        progressDialog.setMessage("Downloading , please wait");
+        progressDialog.setIndeterminate(true);
+
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        progressDialog.show();
     }
 
     @Override
@@ -33,6 +41,8 @@ public class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
+        if (progressDialog.isShowing())
+        progressDialog.dismiss();
         imageView.setImageBitmap(bitmap);
     }
     private Bitmap DownloadingImage(String image_url){

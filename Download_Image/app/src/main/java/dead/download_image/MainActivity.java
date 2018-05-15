@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String imageUrl=ImageUrl.getText().toString();
             if (!imageUrl.isEmpty()){
 
-                new DownloadImageTask(DownloadingImage).execute(imageUrl);
+                new DownloadImageTask(this,DownloadingImage).execute(imageUrl);
                 // DownloadingImage(imageUrl);
             }else {
                 //error Message
