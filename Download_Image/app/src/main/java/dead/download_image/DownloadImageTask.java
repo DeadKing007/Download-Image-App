@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,9 +20,11 @@ import static android.content.ContentValues.TAG;
 public class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
     ImageView imageView;
     ProgressDialog progressDialog;
+    Context context;
     DownloadImageTask(Context context, ImageView imageView){
         this.imageView=imageView;
         progressDialog=new ProgressDialog(context);
+        this.context=context;
         progressDialog.setTitle("Downloading");
         progressDialog.setMessage("Downloading , please wait");
         progressDialog.setIndeterminate(true);
@@ -43,7 +46,12 @@ public class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
         super.onPostExecute(bitmap);
         if (progressDialog.isShowing())
         progressDialog.dismiss();
-        imageView.setImageBitmap(bitmap);
+        if (bitmap!=null) {
+            imageView.setImageBitmap(bitmap);
+        }
+        else
+            Toast.makeText(context,"Enter a valid Url",Toast.LENGTH_SHORT).show();
+
     }
     private Bitmap DownloadingImage(String image_url){
 
@@ -73,6 +81,8 @@ public class DownloadImageTask extends AsyncTask<String,Void,Bitmap> {
 
         }catch (MalformedURLException exception){
             Log.e(TAG,"Error "+exception.getLocalizedMessage());
+
+
         }catch (IOException e){
             Log.e(TAG,"Error "+e.getLocalizedMessage());
         }
